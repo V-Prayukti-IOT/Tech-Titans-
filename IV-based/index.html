@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="sectionHome">
+      <div class="bg-container d-flex flex-column justify-content-end">
+        <div class="tourism-card">
+          <h1 class="main-heading">Tech Titans</h1>
+          <p class="paragraph">Vital Vigilance: Enhancing Patient Safety through IoT Drips Monitoring</p>
+          <button class="button" onclick="display('sectionFavouritePlaces')">
+            View More
+          </button>
+            <a class="blynk"
+                href="http://192.168.67.200/"
+                >Live Monitor</a>
+        </div>
+      </div>
+    </div>
+    <div id="sectionFavouritePlaces">
+        <div class="detailed-view-bg-container">
+            <h1 class="heading">Detailed View</h1>
+            <div class="card-container">
+              <div class="d-flex flex-row">
+                <div class="card d-flex flex-column justify-content-start" style="width: 100rem;">
+                  <div>
+                  <img src="image-1.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">esp32</h5>
+                    <p class="card-text">Powerful Wi-Fi+Bluetooth</p>
+                    <a href="https://www.espressif.com/en/products/modules/esp32" class="btn blynk">View More...</a>
+                  </div>
+                </div>
+                </div>
+                <div class="card d-flex flex-row justify-content-center" style="width: 100rem;">
+                  <div>
+                  <img src="image-2.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Load Sensor</h5>
+                    <p class="card-text">Strain-gauge load cell</p>
+                    <a href="https://www.fierceelectronics.com/sensors/what-a-load-sensor" class="btn blynk">View More..</a>
+                  </div>
+                </div>
+                </div>
+                <div class="card d-flex flex-row justify-content-end" style="width: 100rem;">
+                  <div>
+                  <img src="image-3.webp" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">LCD 12*4</h5>
+                    <p class="card-text">A liquid-crystal display</p>
+                    <a href="https://www.crystalfontz.com/c/character-lcd-displays/21" class="btn blynk">View More..</a>
+                  </div>
+                </div>
+                </div>
+              </div>
+            
+             
+                <div class="card-text-container">
+                    <h1 class="card-heading">Key Points</h1>
+                    <p class="card-description">
+                        An IoT-based drips monitoring system in hospitals utilizes IV drip sensors, a microcontroller or IoT gateway, cloud platforms, and web/mobile interfaces for remote monitoring. Wireless connectivity, precision sensors, and machine learning are key technologies employed. This system enhances patient safety, resource utilization, and staff productivity by providing real-time alerts for abnormal drip rates and optimizing treatment plans based on patient condition.
+                    </p>
+                </div>
+                <div class=" d-flex flex-row justify-content-center">
+                    <button class="button-1" onclick="display('sectioncode')">Source Code</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="sectioncode">
+            <div class="detailed-view-bg-container">
+                <h1 class="heading">Source Code</h1>
+            <div class="card">
+                        <pre class="card-heading-1">
+                            <code>
+                              #define BLYNK_PRINT Serial
+                              #define BLYNK_PRINT Serial
+                              #define BLYNK_TEMPLATE_ID "TMPL3VhzV9TKu"
+                              #define BLYNK_TEMPLATE_NAME "IoT based IV bag monitoring system"
+                              #include <WiFi.h>
+                              #include <WiFiClient.h>
+                              #include <Blynk.h>
+                              #include <BlynkSimpleEsp32.h>
+                              #include <LiquidCrystal_I2C.h>
+                              #include "HX711.h"
+                              #include <DHT.h> // Include the DHT library
+                              LiquidCrystal_I2C lcd(0x27, 20, 4);
+                              #define DOUT  23
+                              #define CLK  19
+                              #define BUZZER 25
+                              HX711 scale;
+                              #define BLYNK_PRINT Serial
+                              
+                              char auth[] = "UlA9Ze_mj9kG4-LJw6rao5HCJPNC2wqg";
+                              char ssid[] = "Anandan";
+                              char pass[] = "12345678";
+                              
+                              int liter;
+                              int val;
+                              float weight; 
+                              float calibration_factor = 102500; // change this value for your Load cell sensor 
+                              
+                              #define DHTPIN 18  // Pin where the DHT sensor is connected
+                              #define DHTTYPE DHT11 // Type of DHT sensor, change to DHT22 or DHT21 if you're using a different sensor
+                              DHT dht(DHTPIN, DHTTYPE); // Initialize the DHT sensor
+                              
+                              void setup() {
+                                // Set up serial monitor
+                                Serial.begin(115200);
+                                lcd.init();
+                                lcd.backlight();
+                                pinMode(BUZZER ,OUTPUT);
+                                Serial.println("Remove all weight from scale");
+                                scale.begin(DOUT, CLK);
+                                scale.set_scale();
+                                scale.tare(); //Reset the scale to 0
+                                long zero_factor = scale.read_average(); //Get a baseline reading
+                                Serial.print("Zero factor: "); 
+                                Serial.println(zero_factor);
+                                Blynk.begin(auth, ssid, pass); 
+                              
+                                dht.begin(); // Initialize the DHT sensor
+                              }
+                               void loop() {
+                               Blynk.run();
+                               measureweight();
+                               measureTemperature(); // Call the function to measure temperature
+                              }
+                               
+                              void measureweight(){
+                               scale.set_scale(calibration_factor); //Adjust to this calibration factor
+                                weight = scale.get_units(5); 
+                                  if(weight<0)
+                                {
+                                  weight=0.00;
+                                  }
+                                liter = weight*470;
+                                val = liter;
+                                val = map(val, 0, 505, 0, 100);
+                                lcd.clear();
+                                lcd.setCursor(1, 0);
+                                lcd.print("Tech Titans-IV Bag");
+                                lcd.setCursor(2, 1);
+                                lcd.print("Monitering System");
+                                Serial.print("Kilogram: ");
+                                Serial.print(weight); 
+                                Serial.println(" Kg");
+                                lcd.setCursor(1, 2);
+                                lcd.print("IV liters = ");
+                                lcd.print(liter);
+                                lcd.print(" mL");
+                                Serial.print("IV BOTTLE: ");
+                                Serial.print(liter);
+                                Serial.println("mL");
+                                lcd.setCursor(1, 3);
+                                lcd.print("IV percent = ");
+                                lcd.print(val);
+                                lcd.print("%");
+                                Serial.print("IV Bag Percent: ");
+                                Serial.print(val);
+                                Serial.println("%");
+                                Serial.println();
+                                delay(500);
+                                if (val <= 50 && val >= 40){
+                                  Blynk.logEvent("iv_alert","IV Bottle is 50%");
+                                }
+                                else if (val <= 20 && val >10){
+                                  Blynk.logEvent("iv_alert","IV Bottle is 20%");
+                              
+                                }
+                                else if (val <= 10 && val >1){
+                                  Blynk.logEvent("iv_alert","IV Bottle is too Low");
+                                  digitalWrite(BUZZER, HIGH);
+                                  delay(0);
+                                }
+                                else{
+                                  digitalWrite(BUZZER, LOW);
+                                }
+                                Blynk.virtualWrite(V0,liter);
+                                Blynk.virtualWrite(V1,val);
+                              }
+                              
+                              void measureTemperature() {
+                                float tempC = dht.readTemperature(); // Read temperature in Celsius
+                                if (isnan(tempC)) {
+                                  Serial.println("Failed to read from DHT sensor!");
+                                  return;
+                                }
+                              
+                                Serial.print("Temperature: ");
+                                Serial.print(tempC);
+                                Serial.println(" °C");
+                              
+                                Blynk.virtualWrite(V2, tempC); // Send temperature data to Blynk
+                              }
+                               
+ 
+
+                                
+                            </code>
+                        </pre>
+                    
+                    <div class=" d-flex flex-row justify-content-center">
+                        <button class="button-2" onclick="display('sectionHome')">Home Page</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+    <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+  </body>
+</html>
